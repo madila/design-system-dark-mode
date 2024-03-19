@@ -8,6 +8,7 @@ import {getContext, store} from '@wordpress/interactivity';
 const {state, actions} = store( 'dark-mode', {
 	state: {
 		isDark: false,
+		scrolled: false,
 		get label() {
 			const { isDark } = getContext();
 			return `Switch to ${isDark ? 'light' : 'dark'} mode`;
@@ -24,23 +25,20 @@ const {state, actions} = store( 'dark-mode', {
 			localStorage.setItem("wp-block-dark-mode--scheme", state.scheme);
 		},
 		bodyScrolled: (e) => {
-    const {scrollY} = window;
-    const isScrolled = scrollY > 0;
+			const isScrolled = window.scrollY > 0;
 
-    if (state.scrolled !== isScrolled) {
-        state.scrolled = isScrolled;
-        if (isScrolled) {
-            e.target.documentElement.classList.add('scrolled');
-        } else {
-            e.target.documentElement.classList.remove('scrolled');
-        }
-    }
-},
+			if (state.scrolled !== isScrolled) {
+				state.scrolled = isScrolled;
+				if (isScrolled) {
+					e.target.documentElement.classList.add('scrolled');
+				} else {
+					e.target.documentElement.classList.remove('scrolled');
+				}
+			}
+		},
 		initScheme: () => {
 			const hasPreference = localStorage.getItem("wp-block-dark-mode--scheme");
 			const context = getContext();
-
-			//yield generateDarkModeStyleSheet();
 
 			if(hasPreference && hasPreference !== state.scheme) {
 				context.isDark = (hasPreference === 'dark');
