@@ -1,0 +1,17 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-design-system-dark-mode {
+	padding: 0.5rem;
+	max-width: 50px;
+	max-height: 50px;
+	box-sizing: border-box;
+	&__icon {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+}

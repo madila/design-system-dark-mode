@@ -1,0 +1,154 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+@keyframes slideaway {
+	from { display: block; }
+	to { transform: translateY(40px); opacity: 0;}
+}
+
+@keyframes sunshine {
+	from { opacity: 0; transform: scale(0.5); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+.wp-block-design-system-dark-mode {
+	font-size: 1em;
+	display: inline-flex;
+
+	&__toggle-icon {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		overflow: visible;
+		padding: 0.5rem;
+		box-sizing: border-box;
+		justify-content: center;
+		align-items: center;
+	}
+
+	button[data-wp-on--click="actions.toggle"] {
+		background-color: transparent;
+		color: var(--wp--preset--color--contrast);
+		fill: var(--wp--preset--color--contrast);
+		padding: 0;
+		border: 1px solid;
+		border-radius: var(--wp--preset--border-radius, 0.5rem);
+		cursor: pointer;
+		transition: background-color 400ms, border 200ms, color 400ms ease-out;
+
+		&:hover {
+			background-color: color-mix(in srgb, transparent, var(--wp--preset--color--contrast) 5%);
+			border-color: color-mix(in srgb, transparent, var(--wp--preset--color--contrast) 15%);
+		}
+
+		> svg {
+			display: block;
+			overflow: visible;
+			box-sizing: border-box;
+
+			& html:not([data-scheme]) {
+				display: none;
+			}
+
+		}
+
+		[data-name="sun__icon"] {
+			width: 85%;
+			height: 85%;
+
+			g[data-name="rays"] {
+				animation: sunshine 400ms;
+				animation-delay: 300ms;
+				animation-fill-mode: both;
+				transform-origin: center;
+			}
+
+			&[hidden] g[data-name="rays"] {
+				transform: scale(0);
+				opacity: 0;
+			}
+		}
+
+		svg:not([hidden]) {
+			animation: slideaway 200ms;
+			animation-direction: reverse;
+			display: block;
+		}
+
+		svg[hidden] {
+			animation: slideaway 200ms;
+			display: none;
+		}
+
+	}
+}
+
+html:not([data-scheme]) .wp-site-blocks:not(.is-root-container), html:not([data-scheme]) g[data-name="rays"] {
+	opacity: 0;
+}
+
+html[data-scheme] .wp-site-blocks:not(.is-root-container) {
+	opacity: 1;
+	transition: 300ms linear;
+}
+
+.wp-block-image img {
+	box-shadow: 0 0 2rem color-mix(in srgb, transparent 55%, var(--wp--preset--color--contrast));
+}
+
+html[data-scheme="dark"] {
+	.wp-block-design-system-dark-mode__invert {
+		filter: invert(100%);
+	}
+}
+
+
+html:not(.scrolled) .is-position-sticky {
+	will-change: box-shadow;
+	transition: box-shadow 200ms linear;
+}
+
+html.scrolled .is-position-sticky {
+	box-shadow: 0 0 20px color-mix(in srgb, transparent 85%, var(--wp--preset--color--contrast));
+	transition: box-shadow 200ms linear;
+}
+
+
+.has-modal-open .wp-block-navigation__responsive-container.hidden-by-default.is-menu-open {
+	position: absolute;
+	overflow: visible;
+	background-color: transparent;
+	height: auto;
+	width: auto;
+	bottom: auto;
+	min-width: 200px;
+	right: 0;
+	left: auto;
+	padding: 0;
+	transform: translate(0.5em, -0.75em) !important;
+}
+
+.has-modal-open .wp-block-navigation__responsive-container.hidden-by-default.is-menu-open .wp-block-navigation__responsive-close {
+	display: flex;
+	padding: 0.75rem 0.5rem;
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--contrast-2);
+	border-radius: 0.5rem;
+	text-align: right;
+}
+
+.has-modal-open .wp-block-navigation__responsive-dialog {
+	margin-top: 0 !important;
+	padding-top: 3rem;
+	padding-bottom: var(--wp--preset--spacing--10);
+	padding-left: var(--wp--preset--spacing--10);
+	padding-right: var(--wp--preset--spacing--10);
+}
+
+.has-modal-open .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	padding-top: 0;
+}
