@@ -13,6 +13,9 @@ const {state, actions} = store( 'dark-mode', {
 			const { isDark } = getContext();
 			return `Switch to ${isDark ? 'light' : 'dark'} mode`;
 		},
+		get prefersDarkMode() {
+			return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+		},
 		get scheme() {
 			const { isDark } = getContext();
 			return isDark ? 'dark' : 'light';
@@ -22,7 +25,7 @@ const {state, actions} = store( 'dark-mode', {
 		toggle: () => {
 			const context = getContext();
 			context.isDark = !context.isDark;
-			localStorage.setItem("wp-block-dark-mode--scheme", state.scheme);
+			localStorage.setItem("design-system-dark-mode--scheme", state.scheme);
 		},
 		bodyScrolled: (e) => {
 			const isScrolled = window.scrollY > 0;
@@ -37,11 +40,12 @@ const {state, actions} = store( 'dark-mode', {
 			}
 		},
 		initScheme: () => {
-			const hasPreference = localStorage.getItem("wp-block-dark-mode--scheme");
+			const hasPreference = localStorage.getItem("design-system-dark-mode--scheme");
 			const context = getContext();
 
-			if(hasPreference && hasPreference !== state.scheme) {
-				context.isDark = (hasPreference === 'dark');
+			if(state.prefersDarkMode || hasPreference && hasPreference !== state.scheme) {
+				console.log(state.prefersDarkMode);
+				context.isDark = hasPreference === 'dark' || (state.prefersDarkMode && !hasPreference);
 			}
 		}
 	},
