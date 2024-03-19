@@ -24,22 +24,18 @@ const {state, actions} = store( 'dark-mode', {
 			localStorage.setItem("wp-block-dark-mode--scheme", state.scheme);
 		},
 		bodyScrolled: (e) => {
-			const {scrollY} = window;
-			if(!scrollY) {
-				state.scrolled = false;
-				e.target.documentElement.classList.remove('scrolled');
-			}
+    const {scrollY} = window;
+    const isScrolled = scrollY > 0;
 
-			if(state.scrolled) return;
-
-			state.scrolled = true;
-			if(scrollY > 0) {
-				e.target.documentElement.classList.add('scrolled');
-			} else {
-				state.scrolled = false;
-			}
-
-		},
+    if (state.scrolled !== isScrolled) {
+        state.scrolled = isScrolled;
+        if (isScrolled) {
+            e.target.documentElement.classList.add('scrolled');
+        } else {
+            e.target.documentElement.classList.remove('scrolled');
+        }
+    }
+},
 		initScheme: () => {
 			const hasPreference = localStorage.getItem("wp-block-dark-mode--scheme");
 			const context = getContext();
