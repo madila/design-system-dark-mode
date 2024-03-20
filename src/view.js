@@ -32,11 +32,7 @@ const {state, actions} = store( 'dark-mode', {
 
 			if (state.scrolled !== isScrolled) {
 				state.scrolled = isScrolled;
-				if (isScrolled) {
-					e.target.documentElement.classList.add('scrolled');
-				} else {
-					e.target.documentElement.classList.remove('scrolled');
-				}
+				e.target.documentElement.classList.toggle('scrolled', isScrolled);
 			}
 		},
 		initScheme: () => {
