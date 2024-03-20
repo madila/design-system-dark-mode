@@ -40,7 +40,6 @@ const {state, actions} = store( 'dark-mode', {
 			const context = getContext();
 
 			if(state.prefersDarkMode || hasPreference && hasPreference !== state.scheme) {
-				console.log(state.prefersDarkMode);
 				context.isDark = hasPreference === 'dark' || (state.prefersDarkMode && !hasPreference);
 			}
 		}

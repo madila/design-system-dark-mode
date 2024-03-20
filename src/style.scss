@@ -96,7 +96,7 @@ html[data-scheme] .wp-site-blocks:not(.is-root-container) {
 	transition: 300ms linear;
 }
 
-.wp-block-image img {
+.wp-block-columns .wp-block-image img {
 	box-shadow: 0 0 2rem color-mix(in srgb, transparent 55%, var(--wp--preset--color--contrast));
 }
 
