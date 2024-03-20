@@ -101,7 +101,7 @@ html[data-scheme] .wp-site-blocks:not(.is-root-container) {
 }
 
 html[data-scheme="dark"] {
-	.wp-block-design-system-dark-mode__invert {
+	.wp-block-design-system-dark-mode__invert, .wp-block-site-logo {
 		filter: invert(100%);
 	}
 }

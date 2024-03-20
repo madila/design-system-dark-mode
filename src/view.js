@@ -17,14 +17,12 @@ const {state, actions} = store( 'dark-mode', {
 			return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 		},
 		get scheme() {
-			const { isDark } = getContext();
-			return isDark ? 'dark' : 'light';
+			return state.isDark ? 'dark' : 'light';
 		}
 	},
 	actions: {
 		toggle: () => {
-			const context = getContext();
-			context.isDark = !context.isDark;
+			state.isDark = !state.isDark;
 			localStorage.setItem("design-system-dark-mode--scheme", state.scheme);
 		},
 		bodyScrolled: (e) => {
@@ -37,17 +35,15 @@ const {state, actions} = store( 'dark-mode', {
 		},
 		initScheme: () => {
 			const hasPreference = localStorage.getItem("design-system-dark-mode--scheme");
-			const context = getContext();
 
 			if(state.prefersDarkMode || hasPreference && hasPreference !== state.scheme) {
-				context.isDark = hasPreference === 'dark' || (state.prefersDarkMode && !hasPreference);
+				state.isDark = hasPreference === 'dark' || (state.prefersDarkMode && !hasPreference);
 			}
 		}
 	},
 	callbacks: {
 		updateScheme: () => {
-			const { isDark } = getContext();
-			document.documentElement.dataset.scheme = isDark ? 'dark' : 'light';
+			document.documentElement.dataset.scheme = state.isDark ? 'dark' : 'light';
 		}
 	},
 } );
