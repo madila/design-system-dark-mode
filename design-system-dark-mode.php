@@ -35,10 +35,10 @@ add_action( 'init', 'dark_mode_block_init' );
 function __generate_dark_mode_styles($output = false, $update = false, $merge = ''): void {
 	$dark_mode_css = get_transient( '_dark-mode-css-output' );
 	if( false === $dark_mode_css || $update ) {
-		$theme_palette = wp_get_global_settings(array( 'custom', 'dark-mode'));
+		$theme_palette = wp_get_global_settings(array( 'custom'));
 		$css = '';
-		if(!empty($theme_palette)) {
-			foreach ( $theme_palette as $slug => $color ) {
+		if(array_key_exists('dark-mode', $theme_palette)) {
+			foreach ( $theme_palette['dark-mode'] as $slug => $color ) {
 				$css .= sprintf("--wp--preset--color--%s : %s;",$slug,$color);
 			}
 		}
@@ -53,9 +53,6 @@ function __generate_dark_mode_styles($output = false, $update = false, $merge = 
 	if($output) echo $dark_mode_css;
 }
 
-function dark_mode_force_update_palette_styles(): void {
-	delete_transient( '_dark-mode-css-output' );
-}
 
 function dark_mode_add_palette_styles(): void {
 	__generate_dark_mode_styles(true);
@@ -73,8 +70,6 @@ function save_dark_mode_palette_styles($post_id, $post): void {
 	}
 
 	$json_update = json_decode($post->post_content, true);
-	//var_dump($json_update['settings']['color']['palette']['custom']); die();
-	//file_put_contents(plugin_dir_path( __FILE__ ).'/colors.json', isset($json_update['settings']['color']['palette']['custom']));
 
 	if(isset($json_update['settings']['color']['palette']['custom'])) {
 
@@ -82,14 +77,11 @@ function save_dark_mode_palette_styles($post_id, $post): void {
 
 		if(count($custom_palette) > 0) {
 			$css = '';
-			foreach ( $custom_palette as $index => $color_data ) {
-				if(!str_contains( $color_data['slug'], '-dark-mode')) return;
-
+			foreach ( $custom_palette as $color_data ) {
 				$trimmed_slug = str_replace('custom-', '', $color_data['slug']);
 				$slug = str_replace('-dark-mode', '', $trimmed_slug);
 				$color = $color_data['color'];
 				$css .= sprintf("--wp--preset--color--%s : %s;",$slug,$color);
-
 			}
 		}
 
