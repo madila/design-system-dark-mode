@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Design System - Dark Mode
  * Description:       An interactive block to allow for custom theme dark mode using the Interactivity API
- * Version:           200.1.3
+ * Version:           200.1.4
  * Requires at least: 6.5
  * Requires PHP:      7.0
  * Author:            Ruben Madila
